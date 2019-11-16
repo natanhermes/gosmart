@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Go Smart Tecnologia</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>GoSmart Tecnologia</h2>
+        <form class="needs-validation" novalidate>
+            <div class="row">
+                <div class="form-group col-md-5">
+                    <label for="exampleFormControlSelect1">Tipo de certificado:</label>
+                    <select class="form-control" id="certificado" onchange="SetarValores();">
+                        <option value="0">Nenhum certificado selecionado</option>
+                        <option value="176">Certificado e-CNPJ A1 - 1 ano</option>
+                        <option value="264">Certificado e-CNPJ A3 - 3 anos</option>
+                        <option value="136">Certificado e-CPF A1 - 1 ano</option>
+                        <option value="212.5">Certificado e-CPF A3 - 3 anos</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="exampleFormControlSelect1">Local de entrega:</label>
+                    <select class="form-control" id="delivery" onchange="SetarValores();">
+                        <option value="0">Escritório Go Smart (Neópolis) - R$ 0,00</option>
+                        <option value="20">Delivery Natal - R$ 20,00</option>
+                        <option value="30">Delivery Natal Zona Norte - R$ 30,00</option>
+                        <option value="25">Delivery Parnamirim - R$ 25,00</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="tipoCertificado">Tipo de certificado:</label>
+                    <label id="receberCertificado">Nenhum selecionado</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-7">
+                    <label>Nosso preço:</label>
+                    <label id="nosso_preco">Selecione o certificado</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group col-md-4">
+                    <input id="seu_preco" type="text" class="form-control" placeholder="Informe seu preço"
+                        aria-describedby="inputGroupPrepend" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button"
+                            onclick="CalcularComissao()">Calcular</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-5">
+                    <label class="d-none" id="labelComissao">Comissão:</label>
+                    <label id="comissao"></label>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-responsive d-none" id="tableParcelas">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Parcela</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Débito</th>
+                        <td id="total0x"></td>
+                        <td id="parcela0x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1x Cartão de crédito</th>
+                        <td id="total1x"></td>
+                        <td id="parcela1x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2x Cartão de crédito</th>
+                        <td id="total2x"></td>
+                        <td id="parcela2x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3x Cartão de crédito</th>
+                        <td id="total3x"></td>
+                        <td id="parcela3x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4x Cartão de crédito</th>
+                        <td id="total4x"></td>
+                        <td id="parcela4x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5x Cartão de crédito</th>
+                        <td id="total5x"></td>
+                        <td id="parcela5x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6x Cartão de crédito</th>
+                        <td id="total6x"></td>
+                        <td id="parcela6x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7x Cartão de crédito</th>
+                        <td id="total7x"></td>
+                        <td id="parcela7x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8x Cartão de crédito</th>
+                        <td id="total8x"></td>
+                        <td id="parcela8x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">9x Cartão de crédito</th>
+                        <td id="total9x"></td>
+                        <td id="parcela9x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">10x Cartão de crédito</th>
+                        <td id="total10x"></td>
+                        <td id="parcela10x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">11x Cartão de crédito</th>
+                        <td id="total11x"></td>
+                        <td id="parcela11x"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">12x Cartão de crédito</th>
+                        <td id="total12x"></td>
+                        <td id="parcela12x"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script language="javascript">
+    const obj = [
+        {
+            descricao: "Selecione um certificado",
+            valor: 0,
+            valorSugerido: 0
+        },
+        {
+
+        }
+    ]
+    var nossopreco = 0;
+    function SetarValores() {
+        nossopreco = 0;
+        var certificado = document.getElementById("certificado");
+        var valorCertificado = certificado.options[certificado.selectedIndex].value;
+        var textoCertificado = certificado.options[certificado.selectedIndex].text;
+        var delivery = document.getElementById("delivery");
+        var valorDelivery = delivery.options[delivery.selectedIndex].value;
+
+        var soma = parseFloat(valorCertificado) + parseFloat(valorDelivery);
+
+        if (certificado.selectedIndex > 0) {
+            nossopreco = soma;
+        }
+        document.getElementById("receberCertificado").innerHTML = textoCertificado;
+        document.getElementById("nosso_preco").innerHTML = "R$ " + formatarValores(nossopreco) + " ( R$" + formatarValores(valorCertificado) +
+            " do certificado +" + " R$ " + formatarValores(valorDelivery) + " do Delivery)";
+
+    }
+    function CalcularComissao() {
+            var seupreco = parseFloat(document.getElementById("seu_preco").value) || 0;
+
+            if (seupreco < nossopreco)
+            {
+                seupreco = nossopreco;
+                document.getElementById("seu_preco").value = formatarValores(seupreco);
+            }
+
+            sua_comissao = seupreco - nossopreco;
+            if (sua_comissao < 0) {
+                seupreco = nossopreco;
+                sua_comissao = 0
+            }
+            document.getElementById("comissao").innerHTML = "R$ " + formatarValores(sua_comissao);
+            if (seupreco > 0) {
+                var fator = [1.0239, 1.0550, 1.1100, 1.1282, 1.1464, 1.1646, 1.1828, 1.2010, 1.2192, 1.2374, 1.2556, 1.2738, 1.2920]
+                for (var i = 0; i < 13; i++) {
+                    var valorTotal = seupreco * fator[i];
+                    var valorParcela = valorTotal / i
+                    if (i == 0) { valorParcela = valorTotal }
+                    document.getElementById("total" + i + "x").innerHTML = 'R$ ' + formatarValores(valorTotal);
+                    document.getElementById("parcela" + i + "x").innerHTML = 'R$ ' + formatarValores(valorParcela);
+                }
+
+                document.getElementById("tableParcelas").classList.remove("d-none");
+                document.getElementById("labelComissao").classList.remove("d-none");
+            } else {
+                document.getElementById("tableParcelas").classList.add("d-none");
+                document.getElementById("labelComissao").classList.add("d-none");
+            }
+        }
+    function formatarValores(x) {
+        x = parseFloat(x);
+        return x.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    $(document).ready(function () {
+        $('#seu_preco').keypress(function (e) {
+            if (e.keyCode == 13)
+                $('#button').click();
+        });
+    });
+</script>
+
+</html>
