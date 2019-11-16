@@ -19,11 +19,11 @@
                 <div class="form-group col-md-5">
                     <label for="exampleFormControlSelect1">Tipo de certificado:</label>
                     <select class="form-control" id="certificado" onchange="SetarValores();">
-                        <option value="0">Nenhum certificado selecionado</option>
-                        <option value="176">Certificado e-CNPJ A1 - 1 ano</option>
-                        <option value="264">Certificado e-CNPJ A3 - 3 anos</option>
-                        <option value="136">Certificado e-CPF A1 - 1 ano</option>
-                        <option value="212.5">Certificado e-CPF A3 - 3 anos</option>
+                        <option>Nenhum certificado selecionado</option>
+                        <option>Certificado e-CNPJ A1 - 1 ano</option>
+                        <option>Certificado e-CNPJ A3 - 3 anos</option>
+                        <option>Certificado e-CPF A1 - 1 ano</option>
+                        <option>Certificado e-CPF A3 - 3 anos</option>
                     </select>
                 </div>
                 <div class="form-group col-md-5">
@@ -151,22 +151,37 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 <script language="javascript">
-    const obj = [
-        {
-            descricao: "Selecione um certificado",
-            valor: 0,
-            valorSugerido: 0
-        },
-        {
 
-        }
-    ]
+    const precos = [
+    {
+        nossopreco: 176,
+        precosugerido: 219.9,
+        descricao: "Certificado e-CNPJ A1 - 1 ano"
+    },
+    {
+        nossopreco: 264,
+        precosugerido: 329.9,
+        descricao: "Certificado e-CNPJ A3 - 3 anos"
+    },
+    {
+        nossopreco: 136,
+        precosugerido: 159.9,
+        descricao: "Certificado e-CPF A1 - 1 ano"
+    },
+    {
+        nossopreco: 212.5,
+        precosugerido: 249.9,
+        descricao: "Certificado e-CPF A3 - 3 anos"
+    }
+]
     var nossopreco = 0;
+    
     function SetarValores() {
         nossopreco = 0;
         var certificado = document.getElementById("certificado");
-        var valorCertificado = certificado.options[certificado.selectedIndex].value;
-        var textoCertificado = certificado.options[certificado.selectedIndex].text;
+        var valorCertificado = certificado.options[certificado.selectedIndex].index;
+        console.log(valorCertificado);
+        var textoCertificado = certificado.options[certificado.selectedIndex].index;
         var delivery = document.getElementById("delivery");
         var valorDelivery = delivery.options[delivery.selectedIndex].value;
 
@@ -194,7 +209,6 @@
                 seupreco = nossopreco;
                 sua_comissao = 0
             }
-            document.getElementById("comissao").innerHTML = "R$ " + formatarValores(sua_comissao);
             if (seupreco > 0) {
                 var fator = [1.0239, 1.0550, 1.1100, 1.1282, 1.1464, 1.1646, 1.1828, 1.2010, 1.2192, 1.2374, 1.2556, 1.2738, 1.2920]
                 for (var i = 0; i < 13; i++) {
@@ -203,6 +217,7 @@
                     if (i == 0) { valorParcela = valorTotal }
                     document.getElementById("total" + i + "x").innerHTML = 'R$ ' + formatarValores(valorTotal);
                     document.getElementById("parcela" + i + "x").innerHTML = 'R$ ' + formatarValores(valorParcela);
+                    document.getElementById("comissao").innerHTML = "R$ " + formatarValores(sua_comissao);
                 }
 
                 document.getElementById("tableParcelas").classList.remove("d-none");
