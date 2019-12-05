@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Go Smart Tecnologia</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light" style="background-color: #6E4D8B;">
+        <a class="navbar-brand" href="#">
+            <img alt="Go Smart Tecnologia" src="images/logo_gosmart.PNG">
+        </a>
+        <h3 style="color: #FFF;">Cálculo de Comissão de Certificado</h3>
+    </nav>
+    <div class="container">               
+        <br>
+            <div class="col-12">
+                <div class="row">               
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="sr-only" for="certificado">Tipo de Certificado:</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Tipo de Certificado</div>
+                                </div>
+                                <select class="form-control" id="certificado">
+                                        <option>Nenhum selecionado</option>
+                                        <option>Certificado e-CNPJ A1 - 1 ano</option>
+                                        <option>Certificado e-CNPJ A3 - 3 anos</option>
+                                        <option>Certificado e-CPF A1 - 1 ano</option>
+                                        <option>Certificado e-CPF A3 - 3 anos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3" id="calcular" style="display: none">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Preço do certificado</div>
+                            </div>
+                            <input id="seu_preco" type="text" class="form-control text-right" placeholder="Informe seu preço">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-info" type="button" id="button"
+                                onclick="CalcularComissao()" style="display: none;">Calcular</button>
+                            </div>
+                            <div class="valid-feedback text-center">
+                                Tudo certo, para aumentar sua comissão aumente o valor.
+                            </div>
+                            <div class="invalid-feedback text-center">
+                                O valor foi reajustado para o preço mínimo.
+                            </div>
+                        </div>
+                        <div class="form-group" id="local" style="display: none">
+                            <label class="sr-only" for="delivery">Local/Delivery:</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Local/Delivery</div>
+                                </div>
+                                <select class="form-control" id="delivery">
+                                    <option value="0">Escritório Go Smart (Neópolis) - R$ 0,00</option>
+                                    <option value="20">Delivery Natal - R$ 20,00</option>
+                                    <option value="30">Delivery Natal Zona Norte - R$ 30,00</option>
+                                    <option value="25">Delivery Parnamirim - R$ 25,00</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <table class="table table-hover" id="tableValores" style="display: none">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Preço Certificado GoSmart</th>
+                                            <td id="nosso_preco" class="text-right"  style="font-weight: bold"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Preço Delivery</th>
+                                            <td id="valorDelivery" class="text-right"  style="font-weight: bold"></td>
+                                    </tr>
+                                    <tr class="bg-success text-light">
+                                        <th scope="row">Sua Comissão</th>
+                                            <td id="suacomissao" class="text-right"  style="font-weight: bold"></td>
+                                    </tr>
+                                    <tr class="bg-danger text-light">
+                                        <th scope="row">Valor Total</th>
+                                            <td id="total" class="text-right" style="font-weight: bold"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-hover table-striped table-sm" id="tableParcelas" style="display: none">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" style="background-color: #6E4D8B;"><span id="badgeValorBase" class="badge badge-light"></span></h1></th>
+                                    <th scope="col" class="text-right d-none" style="background-color: #6E4D8B;">Total</th>
+                                    <th scope="col" class="text-right" style="background-color: #6E4D8B;">Parcela</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Débito</th>
+                                    <td id="total0x" class="text-right d-none"></td>
+                                    <td id="parcela0x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1x Cartão de crédito</th>
+                                    <td id="total1x" class="text-right d-none"></td>
+                                    <td id="parcela1x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2x Cartão de crédito</th>
+                                    <td id="total2x" class="text-right d-none"></td>
+                                    <td id="parcela2x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3x Cartão de crédito</th>
+                                    <td id="total3x" class="text-right d-none"></td>
+                                    <td id="parcela3x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4x Cartão de crédito</th>
+                                    <td id="total4x" class="text-right d-none"></td>
+                                    <td id="parcela4x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5x Cartão de crédito</th>
+                                    <td id="total5x" class="text-right d-none"></td>
+                                    <td id="parcela5x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6x Cartão de crédito</th>
+                                    <td id="total6x" class="text-right d-none"></td>
+                                    <td id="parcela6x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7x Cartão de crédito</th>
+                                    <td id="total7x" class="text-right d-none"></td>
+                                    <td id="parcela7x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">8x Cartão de crédito</th>
+                                    <td id="total8x" class="text-right d-none"></td>
+                                    <td id="parcela8x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">9x Cartão de crédito</th>
+                                    <td id="total9x" class="text-right d-none"></td>
+                                    <td id="parcela9x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">10x Cartão de crédito</th>
+                                    <td id="total10x" class="text-right d-none"></td>
+                                    <td id="parcela10x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">11x Cartão de crédito</th>
+                                    <td id="total11x" class="text-right d-none"></td>
+                                    <td id="parcela11x" class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">12x Cartão de crédito</th>
+                                    <td id="total12x" class="text-right d-none"></td>
+                                    <td id="parcela12x" class="text-right"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script src="scripts/certificado.js?v=2"></script>
+
+</html>
