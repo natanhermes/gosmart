@@ -47,8 +47,7 @@ $('#certificado').change(function() {
 //    CalcularComissao();
 //});
 $('#delivery').change(function() {
-    $('#tableParcelas').addClass("d-none");
-    $('#tableValores').addClass("d-none");
+    CalcularComissao();
 });
 
 function CalcularComissao() {
@@ -62,7 +61,8 @@ function CalcularComissao() {
     document.getElementById("seu_preco").classList.remove("is-valid");
 
     if (seupreco < nossopreco)
-    {   
+    {
+        seupreco = nossopreco;   
         document.getElementById("seu_preco").classList.add("is-invalid");
         document.getElementById("seu_preco").value = formatarValores(nossopreco);
     } else {
@@ -88,15 +88,15 @@ function formatarValores(x) {
 
 function AjustarLayout () {
     if($('#certificado').prop('selectedIndex') > 0){
-        $('#local').removeClass("d-none");
-        $('#calcular').removeClass("d-none");
-        $('#button').removeClass("d-none");
+        $('#local').fadeIn();
+        $('#calcular').fadeIn();
+        $('#button').fadeIn();
     } else {
-        $('#local').addClass("d-none");
-        $('#calcular').addClass("d-none");
-        $('#button').addClass("d-none");
-        $('#tableParcelas').addClass("d-none");
-        $('#tableValores').addClass("d-none");
+        $('#local').fadeOut();
+        $('#calcular').fadeOut();
+        $('#button').fadeOut();
+        $('#tableParcelas').fadeOut();
+        $('#tableValores').fadeOut();
     }
 }
 
@@ -110,14 +110,17 @@ function ExibirTabelas(nossopreco,valorDelivery,sua_comissao,total){
             document.getElementById("total" + i + "x").innerHTML = 'R$ ' + formatarValores(valorTotal);
             document.getElementById("parcela" + i + "x").innerHTML = 'R$ ' + formatarValores(valorParcela);
         }
-        document.getElementById("tableParcelas").classList.remove("d-none");
-        document.getElementById("tableValores").classList.remove("d-none");
+        $("#tableParcelas").fadeOut();
+        $("#tableValores").fadeOut();
+        $("#tableParcelas").fadeIn();
+        $("#tableValores").fadeIn();
 
         document.getElementById("nosso_preco").innerHTML = 'R$ ' + formatarValores(nossopreco);
         document.getElementById("valorDelivery").innerHTML = 'R$ ' + formatarValores(valorDelivery);
         document.getElementById("suacomissao").innerHTML = 'R$' + formatarValores(sua_comissao);
         document.getElementById("total").innerHTML = 'R$' + formatarValores(total);
+        $("#badgeValorBase").html("Valor base para cálculo: R$ " + formatarValores(total));
     } else {
-        document.getElementById("tableParcelas").classList.add("d-none");
+        $("#tableParcelas").fadeOut();
     }
 }
