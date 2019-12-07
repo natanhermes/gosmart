@@ -38,19 +38,23 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="input-group mb-3 d-none" id="calcular">
+                        <div class="input-group mb-3" id="calcular" style="display: none">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Preço do certificado</div>
                             </div>
                             <input id="seu_preco" type="text" class="form-control text-right" placeholder="Informe seu preço">
-                            <div class="valid-feedback">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-info" type="button" id="button"
+                                onclick="CalcularComissao()" style="display: none;">Calcular</button>
+                            </div>
+                            <div class="valid-feedback text-center">
                                 Tudo certo, para aumentar sua comissão aumente o valor.
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback text-center">
                                 O valor foi reajustado para o preço mínimo.
                             </div>
                         </div>
-                        <div class="form-group d-none" id="local">
+                        <div class="form-group" id="local" style="display: none">
                             <label class="sr-only" for="delivery">Local/Delivery:</label>
                             <div class="input-group mb-2 mr-sm-2">
                                 <div class="input-group-prepend">
@@ -66,13 +70,12 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <button class="btn btn-outline-info d-none" type="button" id="button"
-                                onclick="CalcularComissao()" style="width: 100%;">Calcular</button>
+                                
                             </div>
                         </div>
                         <br>
                         <div class="form-group">
-                            <table class="table table-hover d-none" id="tableValores">
+                            <table class="table table-hover" id="tableValores" style="display: none">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Preço Certificado GoSmart</th>
@@ -95,79 +98,79 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <table class="table table-hover table-striped d-none table-sm" id="tableParcelas">
+                        <table class="table table-hover table-striped table-sm" id="tableParcelas" style="display: none">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col" style="background-color: #6E4D8B;"></th>
-                                    <th scope="col" class="text-right" style="background-color: #6E4D8B;">Total</th>
+                                    <th scope="col" style="background-color: #6E4D8B;"><span id="badgeValorBase" class="badge badge-light"></span></h1></th>
+                                    <th scope="col" class="text-right d-none" style="background-color: #6E4D8B;">Total</th>
                                     <th scope="col" class="text-right" style="background-color: #6E4D8B;">Parcela</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th scope="row">Débito</th>
-                                        <td id="total0x" class="text-right"></td>
-                                        <td id="parcela0x" class="text-right"></td>
+                                    <td id="total0x" class="text-right d-none"></td>
+                                    <td id="parcela0x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1x Cartão de crédito</th>
-                                        <td id="total1x" class="text-right"></td>
-                                        <td id="parcela1x" class="text-right"></td>
+                                    <td id="total1x" class="text-right d-none"></td>
+                                    <td id="parcela1x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">2x Cartão de crédito</th>
-                                        <td id="total2x" class="text-right"></td>
-                                        <td id="parcela2x" class="text-right"></td>
+                                    <td id="total2x" class="text-right d-none"></td>
+                                    <td id="parcela2x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">3x Cartão de crédito</th>
-                                        <td id="total3x" class="text-right"></td>
-                                        <td id="parcela3x" class="text-right"></td>
+                                    <td id="total3x" class="text-right d-none"></td>
+                                    <td id="parcela3x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">4x Cartão de crédito</th>
-                                        <td id="total4x" class="text-right"></td>
-                                        <td id="parcela4x" class="text-right"></td>
+                                    <td id="total4x" class="text-right d-none"></td>
+                                    <td id="parcela4x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">5x Cartão de crédito</th>
-                                        <td id="total5x" class="text-right"></td>
-                                        <td id="parcela5x" class="text-right"></td>
+                                    <td id="total5x" class="text-right d-none"></td>
+                                    <td id="parcela5x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">6x Cartão de crédito</th>
-                                        <td id="total6x" class="text-right"></td>
-                                        <td id="parcela6x" class="text-right"></td>
+                                    <td id="total6x" class="text-right d-none"></td>
+                                    <td id="parcela6x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">7x Cartão de crédito</th>
-                                        <td id="total7x" class="text-right"></td>
-                                        <td id="parcela7x" class="text-right"></td>
+                                    <td id="total7x" class="text-right d-none"></td>
+                                    <td id="parcela7x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">8x Cartão de crédito</th>
-                                        <td id="total8x" class="text-right"></td>
-                                        <td id="parcela8x" class="text-right"></td>
+                                    <td id="total8x" class="text-right d-none"></td>
+                                    <td id="parcela8x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">9x Cartão de crédito</th>
-                                        <td id="total9x" class="text-right"></td>
-                                        <td id="parcela9x" class="text-right"></td>
+                                    <td id="total9x" class="text-right d-none"></td>
+                                    <td id="parcela9x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">10x Cartão de crédito</th>
-                                        <td id="total10x" class="text-right"></td>
-                                        <td id="parcela10x" class="text-right"></td>
+                                    <td id="total10x" class="text-right d-none"></td>
+                                    <td id="parcela10x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">11x Cartão de crédito</th>
-                                        <td id="total11x" class="text-right"></td>
-                                        <td id="parcela11x" class="text-right"></td>
+                                    <td id="total11x" class="text-right d-none"></td>
+                                    <td id="parcela11x" class="text-right"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">12x Cartão de crédito</th>
-                                        <td id="total12x" class="text-right"></td>
-                                        <td id="parcela12x" class="text-right"></td>
+                                    <td id="total12x" class="text-right d-none"></td>
+                                    <td id="parcela12x" class="text-right"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -176,15 +179,13 @@
             </div>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-<script src="scripts/certificado.js"></script>
+<script src="scripts/certificado.js?v=2"></script>
 
 </html>
