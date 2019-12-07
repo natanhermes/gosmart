@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="icon" href="images/favicon.ico">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -12,23 +12,24 @@
 </head>
 
 <body>
-        <nav class="navbar navbar-light" style="background-color: #6E4D8B;">
-                <a class="navbar-brand" href="#">
-                    <img alt="Go Smart Tecnologia" src="../images/logo_gosmart.PNG">
-                </a>
-            </nav>
-    <div class="container">
+    <nav class="navbar navbar-light" style="background-color: #6E4D8B;">
+        <a class="navbar-brand" href="#">
+            <img alt="Go Smart Tecnologia" src="images/logo_gosmart.PNG">
+        </a>
+        <h3 style="color: #FFF;">Cálculo de Comissão de Certificado</h3>
+    </nav>
+    <div class="container">               
         <br>
             <div class="col-12">
                 <div class="row">               
                     <div class="col-md-6">
-                        <div class="form-group form-row">
+                        <div class="form-group">
                             <label class="sr-only" for="certificado">Tipo de Certificado:</label>
                             <div class="input-group mb-2 mr-sm-2">
                                 <div class="input-group-prepend">
                                 <div class="input-group-text">Tipo de Certificado</div>
                                 </div>
-                                <select class="form-control" id="certificado" onchange="SetarValores();">
+                                <select class="form-control" id="certificado">
                                         <option>Nenhum selecionado</option>
                                         <option>Certificado e-CNPJ A1 - 1 ano</option>
                                         <option>Certificado e-CNPJ A3 - 3 anos</option>
@@ -37,26 +38,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group d-none" id="local">
-                            <label class="sr-only" for="delivery">Local/Delivery:</label>
-                            <div class="input-group mb-2 mr-sm-2">
-                                <div class="input-group-prepend">
-                                <div class="input-group-text">Local/Delivery</div>
-                                </div>
-                                <select class="form-control" id="delivery" onchange="SetarValores();">
-                                    <option value="0">Escritório Go Smart (Neópolis) - R$ 0,00</option>
-                                    <option value="20">Delivery Natal - R$ 20,00</option>
-                                    <option value="30">Delivery Natal Zona Norte - R$ 30,00</option>
-                                    <option value="25">Delivery Parnamirim - R$ 25,00</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="input-group mb-3 d-none" id="calcular">
-                            <input id="seu_preco" type="text" class="form-control" placeholder="Informe seu preço">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button"
-                                onclick="CalcularComissao()">Calcular</button>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Preço do certificado</div>
                             </div>
+                            <input id="seu_preco" type="text" class="form-control text-right" placeholder="Informe seu preço">
                             <div class="valid-feedback">
                                 Tudo certo, para aumentar sua comissão aumente o valor.
                             </div>
@@ -64,24 +50,45 @@
                                 O valor foi reajustado para o preço mínimo.
                             </div>
                         </div>
-                        <div class="form-group d-none" id="comissao">
-                            <table class="table table-hover " id="tableValores">
+                        <div class="form-group d-none" id="local">
+                            <label class="sr-only" for="delivery">Local/Delivery:</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Local/Delivery</div>
+                                </div>
+                                <select class="form-control" id="delivery">
+                                    <option value="0">Escritório Go Smart (Neópolis) - R$ 0,00</option>
+                                    <option value="20">Delivery Natal - R$ 20,00</option>
+                                    <option value="30">Delivery Natal Zona Norte - R$ 30,00</option>
+                                    <option value="25">Delivery Parnamirim - R$ 25,00</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-outline-info d-none" type="button" id="button"
+                                onclick="CalcularComissao()" style="width: 100%;">Calcular</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <table class="table table-hover d-none" id="tableValores">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Preço Certificado GoSmart</th>
-                                            <td id="nosso_preco" class="text-right"></td>
+                                            <td id="nosso_preco" class="text-right"  style="font-weight: bold"></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Preço Delivery</th>
-                                            <td id="valorDelivery" class="text-right"></td>
+                                            <td id="valorDelivery" class="text-right"  style="font-weight: bold"></td>
                                     </tr>
-                                    <tr class="table-success">
-                                        <th scope="row">Sua comissão</th>
-                                            <td id="suacomissao" class="text-right"></td>
+                                    <tr class="bg-success text-light">
+                                        <th scope="row">Sua Comissão</th>
+                                            <td id="suacomissao" class="text-right"  style="font-weight: bold"></td>
                                     </tr>
-                                    <tr class="table-danger">
+                                    <tr class="bg-danger text-light">
                                         <th scope="row">Valor Total</th>
-                                            <td id="total" class="text-right"></td>
+                                            <td id="total" class="text-right" style="font-weight: bold"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -91,10 +98,10 @@
                         <table class="table table-hover table-striped d-none table-sm" id="tableParcelas">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col"></th>
-                                        <th scope="col" class="text-right">Total</th>
-                                        <th scope="col" class="text-right">Parcela</th>
-                                    </tr>
+                                    <th scope="col" style="background-color: #6E4D8B;"></th>
+                                    <th scope="col" class="text-right" style="background-color: #6E4D8B;">Total</th>
+                                    <th scope="col" class="text-right" style="background-color: #6E4D8B;">Parcela</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr>
@@ -178,115 +185,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-<script language="javascript">
-    const precos = [
-    {
-        preco: 0,
-        precosugerido: 0,
-        descricaoCertificado: "Nenhum certificado selecionado"
-    },
-    {
-        preco: 176,
-        precosugerido: 219.9,
-        descricaoCertificado: "Certificado e-CNPJ A1 - 1 ano"
-    },
-    {
-        preco: 264,
-        precosugerido: 329.9,
-        descricaoCertificado: "Certificado e-CNPJ A3 - 3 anos"
-    },
-    {
-        preco: 136,
-        precosugerido: 159.9,
-        descricaoCertificado: "Certificado e-CPF A1 - 1 ano"
-    },
-    {
-        preco: 212.5,
-        precosugerido: 249.9,
-        descricaoCertificado: "Certificado e-CPF A3 - 3 anos"
-    }
-]    
-    var nossopreco = 0;
-    var valorDelivery = 0;
-    var soma = 0;
-    function SetarValores() {
-        var certificado = document.getElementById("certificado");
-        var valorCertificado = certificado.options[certificado.selectedIndex].index;
-        var tipoCertificado = certificado.options[certificado.selectedIndex].index;
-
-        delivery = document.getElementById("delivery");
-        valorDelivery = delivery.options[delivery.selectedIndex].value;
-
-        nossopreco = precos[tipoCertificado].preco;
-        var descricao = precos[tipoCertificado].descricaoCertificado;
-
-        soma = parseFloat(nossopreco) + parseFloat(valorDelivery);
-        if (certificado.selectedIndex > 0) {
-            nossopreco = soma;
-        }
-        //document.getElementById("nosso_preco").innerHTML = "R$ " + formatarValores(nossopreco) +
-        //" ( R$" + formatarValores(nossopreco) + " do certificado +" + 
-        //" R$ " + formatarValores(valorDelivery) + " do Delivery)";
-         AjustarLayout();
-    }
-    function CalcularComissao() {
-            var seupreco = parseFloat(document.getElementById("seu_preco").value) || 0;
-
-            document.getElementById("seu_preco").classList.remove("is-invalid");
-            document.getElementById("seu_preco").classList.remove("is-valid");
-
-            if (seupreco < nossopreco)
-            {
-                document.getElementById("seu_preco").classList.add("is-invalid");
-                seupreco = nossopreco;
-                document.getElementById("seu_preco").value = formatarValores(seupreco);
-            } else {
-                document.getElementById("seu_preco").classList.add("is-valid");
-            }
-            sua_comissao = seupreco - nossopreco;
-            if (sua_comissao < 0) {
-                seupreco = nossopreco;
-                sua_comissao = 0
-            }
-            if (seupreco > 0) {
-                var fator = [1.0239, 1.0550, 1.1100, 1.1282, 1.1464, 1.1646, 1.1828, 1.2010, 1.2192, 1.2374, 1.2556, 1.2738, 1.2920]
-                for (var i = 0; i < 13; i++) {
-                    var valorTotal = seupreco * fator[i];
-                    var valorParcela = valorTotal / i;
-                    if (i == 0) { valorParcela = valorTotal }
-                    document.getElementById("total" + i + "x").innerHTML = 'R$ ' + formatarValores(valorTotal);
-                    document.getElementById("parcela" + i + "x").innerHTML = 'R$ ' + formatarValores(valorParcela);
-                }
-                document.getElementById("tableParcelas").classList.remove("d-none");
-                document.getElementById("comissao").classList.remove("d-none");
-            } else {
-                document.getElementById("tableParcelas").classList.add("d-none");
-            }
-            document.getElementById("nosso_preco").innerHTML = 'R$ ' + formatarValores(nossopreco - valorDelivery);
-            document.getElementById("valorDelivery").innerHTML = 'R$ ' + formatarValores((valorDelivery));
-            document.getElementById("suacomissao").innerHTML = 'R$' + formatarValores(sua_comissao);
-            document.getElementById("total").innerHTML = 'R$' + formatarValores(seupreco);
-        }
-    function formatarValores(x) {
-        x = parseFloat(x);
-        return x.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-    $(document).ready(function () {
-        $('#seu_preco').keypress(function (e) {
-            if (e.keyCode == 13)
-                $('#button').click();
-        });
-        
-    });
-    function AjustarLayout () {
-        if($('#certificado').prop('selectedIndex') > 0){
-            $('#local').removeClass("d-none");
-                $('#calcular').removeClass("d-none");
-        } else {
-            $('#local').addClass("d-none");
-            $('#calcular').addClass("d-none");
-        }
-    }
-</script>
+<script src="scripts/certificado.js"></script>
 
 </html>
