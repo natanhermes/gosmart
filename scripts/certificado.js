@@ -44,9 +44,6 @@ $('#certificado').change(() => {
 
   AjustarLayout();
 });
-// $('#seu_preco').keyup(function() {
-//    CalcularComissao();
-// });
 
 $('#delivery').change(() => {
   CalcularComissao();
