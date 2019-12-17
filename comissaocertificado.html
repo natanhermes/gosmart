@@ -45,7 +45,7 @@
                             <input id="seu_preco" type="text" class="form-control text-right" placeholder="Informe seu preço">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-info" type="button" id="button"
-                                onclick="CalcularComissao()" style="display: none;">Calcular</button>
+                                onclick="CalcularComissao()">Calcular</button>
                             </div>
                             <div class="valid-feedback text-center">
                                 Tudo certo, para aumentar sua comissão aumente o valor.
@@ -68,6 +68,27 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group" id="midiasA3" style="display: none">
+                            <label class="sr-only" for="midias">Mídias:</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Mídias:</div>
+                                </div>
+                                <select class="form-control" id="midias">
+                                    <option value="0">Selecione uma das opções</option>
+                                    <option value="0">Cliente já possui mídia - R$ 0,00</option>
+                                    <option value="79.90">Cartão inteligente - R$ 79,90</option>
+                                    <option value="149.90">Token USB - R$ 149,90</option>
+                                    <option value="189.90">Leitor + Cartão inteligente - R$ 189,90</option>
+                                </select>
+                                <div class="valid-feedback text-center">
+                                    Tudo certo!
+                                </div>
+                                <div class="invalid-feedback text-center">
+                                    Certificados A3 exigem um tipo de mídia.
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-12">
                                 
@@ -84,6 +105,10 @@
                                     <tr>
                                         <th scope="row">Preço Delivery</th>
                                             <td id="valorDelivery" class="text-right"  style="font-weight: bold"></td>
+                                    </tr>
+                                    <tr id="linhaMidias" style="display: none;">
+                                        <th scope="row">Preço Midia</th>
+                                            <td id="valorMidia" class="text-right"  style="font-weight: bold"></td>
                                     </tr>
                                     <tr class="bg-success text-light">
                                         <th scope="row">Sua Comissão</th>

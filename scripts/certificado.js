@@ -1,126 +1,217 @@
 const precos = [
-    {
-        preco: 0,
-        precosugerido: 0,
-        descricaoCertificado: "Nenhum certificado selecionado"
-    },
-    {
-        preco: 176.0,
-        precosugerido: 219.9,
-        descricaoCertificado: "Certificado e-CNPJ A1 - 1 ano"
-    },
-    {
-        preco: 264.0,
-        precosugerido: 329.9,
-        descricaoCertificado: "Certificado e-CNPJ A3 - 3 anos"
-    },
-    {
-        preco: 136.0,
-        precosugerido: 159.9,
-        descricaoCertificado: "Certificado e-CPF A1 - 1 ano"
-    },
-    {
-        preco: 212.5,
-        precosugerido: 249.9,
-        descricaoCertificado: "Certificado e-CPF A3 - 3 anos"
+  {
+    preco: 0,
+    precosugerido: 0,
+    descricaoCertificado: 'Nenhum certificado selecionado',
+  },
+  {
+    preco: 176.0,
+    precosugerido: 219.9,
+    descricaoCertificado: 'Certificado e-CNPJ A1 - 1 ano',
+  },
+  {
+    preco: 264.0,
+    precosugerido: 329.9,
+    descricaoCertificado: 'Certificado e-CNPJ A3 - 3 anos',
+  },
+  {
+    preco: 136.0,
+    precosugerido: 159.9,
+    descricaoCertificado: 'Certificado e-CPF A1 - 1 ano',
+  },
+  {
+    preco: 212.5,
+    precosugerido: 249.9,
+    descricaoCertificado: 'Certificado e-CPF A3 - 3 anos',
+  },
+];
+
+$(document).ready(() => {
+  $('#seu_preco').keypress(e => {
+    if (e.keyCode === 13) {
+      $('#button').click();
     }
-]    
-
-$(document).ready(function () {
-    $('#seu_preco').keypress(function (e) {
-        if (e.keyCode == 13)
-            $('#button').click();
-    });
-    
+  });
 });
 
-$('#certificado').change(function() {
-    var certificado = document.getElementById("certificado");
-    var tipoCertificado = certificado.options[certificado.selectedIndex].index;
-    var precosugerido = precos[tipoCertificado].precosugerido;
+$('#certificado').change(() => {
+  const certificado = document.getElementById('certificado');
+  const tipoCertificado = certificado.options[certificado.selectedIndex].index;
+  const { precosugerido } = precos[tipoCertificado];
+  $('#seu_preco').val(formatarValores(precosugerido));
+  $('#midias')[0].selectedIndex = 0;
+  $('#tableValores').fadeOut();
 
-    $('#seu_preco').val(formatarValores(precosugerido));
-
-    AjustarLayout();
+  AjustarLayout();
 });
-//$('#seu_preco').keyup(function() {
+// $('#seu_preco').keyup(function() {
 //    CalcularComissao();
-//});
-$('#delivery').change(function() {
-    CalcularComissao();
+// });
+
+$('#delivery').change(() => {
+  CalcularComissao();
+});
+$('#midias').change(() => {
+  CalcularComissao();
 });
 
 function CalcularComissao() {
-    var certificado = document.getElementById("certificado");
-    var tipoCertificado = certificado.options[certificado.selectedIndex].index;
-    var nossopreco = parseFloat(precos[tipoCertificado].preco);
-    var seupreco = parseFloat((document.getElementById("seu_preco").value).replace(',','.')) || 0;
-    var valorDelivery = parseFloat($('#delivery').children("option:selected").val());
-    
-    document.getElementById("seu_preco").classList.remove("is-invalid");
-    document.getElementById("seu_preco").classList.remove("is-valid");
-
-    if (seupreco < nossopreco)
-    {
-        seupreco = nossopreco;   
-        document.getElementById("seu_preco").classList.add("is-invalid");
-        document.getElementById("seu_preco").value = formatarValores(nossopreco);
+  if (ValidarMidia()) {
+    const certificado = document.getElementById('certificado');
+    const tipoCertificado =
+      certificado.options[certificado.selectedIndex].index;
+    const nossopreco = parseFloat(precos[tipoCertificado].preco);
+    let seupreco =
+      parseFloat(
+        document.getElementById('seu_preco').value.replace(',', '.')
+      ) || 0;
+    const valorDelivery = parseFloat(
+      $('#delivery')
+        .children('option:selected')
+        .val()
+    );
+    const valorMidia = parseFloat(
+      $('#midias')
+        .children('option:selected')
+        .val()
+    );
+    document.getElementById('seu_preco').classList.remove('is-invalid');
+    document.getElementById('seu_preco').classList.remove('is-valid');
+    document.getElementById('midias').classList.remove('is-invalid');
+    if (seupreco < nossopreco) {
+      seupreco = nossopreco;
+      document.getElementById('seu_preco').classList.add('is-invalid');
+      document.getElementById('seu_preco').value = formatarValores(nossopreco);
     } else {
-        document.getElementById("seu_preco").classList.add("is-valid");
-        document.getElementById("seu_preco").value = formatarValores(seupreco);
+      document.getElementById('seu_preco').classList.add('is-valid');
+      document.getElementById('seu_preco').value = formatarValores(seupreco);
     }
-    
-    var sua_comissao = seupreco - nossopreco;
-    
+
+    let sua_comissao = seupreco - nossopreco;
+
     if (sua_comissao < 0) {
-        sua_comissao = 0
+      sua_comissao = 0;
     }
+    const total = seupreco + valorDelivery + valorMidia;
 
-    var total = seupreco + valorDelivery;
+    ExibirTabelas(nossopreco, valorDelivery, valorMidia, sua_comissao, total);
+  } else {
+    $('#tableParcelas').fadeOut();
+    $('#tableValores').fadeOut();
+    $('#linhaMidias').fadeIn();
+    document.getElementById('midias').classList.add('is-invalid');
+  }
+}
 
-    ExibirTabelas(nossopreco, valorDelivery, sua_comissao, total);
+function ValidarMidia() {
+  const indexCertificado = $('#certificado').prop('selectedIndex');
+  const indexMidia = $('#midias').prop('selectedIndex');
+
+  if (indexCertificado === 2 || indexCertificado === 4) {
+    return indexMidia > 0;
+  }
+  return true;
 }
 
 function formatarValores(x) {
-    x = parseFloat(x);
-    return x.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  x = parseFloat(x);
+  return x.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 
-function AjustarLayout () {
-    if($('#certificado').prop('selectedIndex') > 0){
-        $('#local').fadeIn();
-        $('#calcular').fadeIn();
-        $('#button').fadeIn();
+function AjustarLayout() {
+  if ($('#certificado').prop('selectedIndex') > 0) {
+    if ($('#certificado').prop('selectedIndex') === 2) {
+      $('#midiasA3').fadeIn();
+      $('#local').fadeIn();
+      $('#calcular').fadeIn();
+      $('#tableParcelas').fadeOut();
+      $('#tableValores').fadeOut();
+      $('#linhaMidias').fadeIn();
+    } else if ($('#certificado').prop('selectedIndex') === 4) {
+      $('#midiasA3').fadeIn();
+      $('#local').fadeIn();
+      $('#calcular').fadeIn();
+      $('#tableParcelas').fadeOut();
+      $('#tableValores').fadeOut();
+      $('#linhaMidias').fadeIn();
     } else {
-        $('#local').fadeOut();
-        $('#calcular').fadeOut();
-        $('#button').fadeOut();
-        $('#tableParcelas').fadeOut();
-        $('#tableValores').fadeOut();
+      $('#midiasA3').fadeOut();
+      $('#local').fadeIn();
+      $('#calcular').fadeIn();
+      $('#linhaMidias').fadeOut();
+      $('#tableParcelas').fadeOut();
+      $('#tableValores').fadeOut();
     }
+  } else {
+    $('#midiasA3').fadeOut();
+    $('#local').fadeOut();
+    $('#calcular').fadeOut();
+    $('#tableParcelas').fadeOut();
+    $('#tableValores').fadeOut();
+  }
 }
 
-function ExibirTabelas(nossopreco,valorDelivery,sua_comissao,total){
-    if (total > 0) {
-        var fator = [1.0239, 1.0550, 1.1100, 1.1282, 1.1464, 1.1646, 1.1828, 1.2010, 1.2192, 1.2374, 1.2556, 1.2738, 1.2920]
-        for (var i = 0; i < 13; i++) {
-            var valorTotal = total * fator[i];
-            var valorParcela = valorTotal / i;
-            if (i == 0) { valorParcela = valorTotal }
-            document.getElementById("total" + i + "x").innerHTML = 'R$ ' + formatarValores(valorTotal);
-            document.getElementById("parcela" + i + "x").innerHTML = 'R$ ' + formatarValores(valorParcela);
-        }
-        $("#tableParcelas").fadeOut();
-        $("#tableValores").fadeOut();
-        $("#tableParcelas").fadeIn();
-        $("#tableValores").fadeIn();
-
-        document.getElementById("nosso_preco").innerHTML = 'R$ ' + formatarValores(nossopreco);
-        document.getElementById("valorDelivery").innerHTML = 'R$ ' + formatarValores(valorDelivery);
-        document.getElementById("suacomissao").innerHTML = 'R$' + formatarValores(sua_comissao);
-        document.getElementById("total").innerHTML = 'R$' + formatarValores(total);
-        $("#badgeValorBase").html("Valor base para cálculo: R$ " + formatarValores(total));
-    } else {
-        $("#tableParcelas").fadeOut();
+function ExibirTabelas(
+  nossopreco,
+  valorDelivery,
+  valorMidia,
+  sua_comissao,
+  total
+) {
+  if (total > 0) {
+    const fator = [
+      1.0239,
+      1.055,
+      1.11,
+      1.1282,
+      1.1464,
+      1.1646,
+      1.1828,
+      1.201,
+      1.2192,
+      1.2374,
+      1.2556,
+      1.2738,
+      1.292,
+    ];
+    for (let i = 0; i < 13; i++) {
+      const valorTotal = total * fator[i];
+      let valorParcela = valorTotal / i;
+      if (i === 0) {
+        valorParcela = valorTotal;
+      }
+      document.getElementById(`total${i}x`).innerHTML = `R$ ${formatarValores(
+        valorTotal
+      )}`;
+      document.getElementById(`parcela${i}x`).innerHTML = `R$ ${formatarValores(
+        valorParcela
+      )}`;
     }
+    $('#tableParcelas').fadeOut();
+    $('#tableValores').fadeOut();
+    $('#tableParcelas').fadeIn();
+    $('#tableValores').fadeIn();
+
+    document.getElementById('nosso_preco').innerHTML = `R$ ${formatarValores(
+      nossopreco
+    )}`;
+    document.getElementById('valorDelivery').innerHTML = `R$ ${formatarValores(
+      valorDelivery
+    )}`;
+    document.getElementById('valorMidia').innerHTML = `R$ ${formatarValores(
+      valorMidia
+    )}`;
+    document.getElementById('suacomissao').innerHTML = `R$${formatarValores(
+      sua_comissao
+    )}`;
+    document.getElementById('total').innerHTML = `R$${formatarValores(total)}`;
+    $('#badgeValorBase').html(
+      `Valor base para cálculo: R$ ${formatarValores(total)}`
+    );
+  } else {
+    $('#tableParcelas').fadeOut();
+  }
 }
